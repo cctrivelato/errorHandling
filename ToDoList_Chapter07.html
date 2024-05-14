@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>To Do List</title>
+<meta http-equiv="content-type" content="text/html;
+charset=iso-8859-1" />
+<link rel="stylesheet" href="js_styles.css" type="text/css" />
+<script type="text/javascript">
+/* First I edited the form tag to have a name='task'. Then I changed all methods
+to place in each method variables that hold places in the HTML code to print and
+collect values back and forth. After that, I just adjusted the scripting area to
+look more organized and aligned more clearly each task in each method. */
+window.status = "Elvis has left the building ... ";
+function scrollStatusBar() {
+     var message = window.status;
+     window.status = message.substring(1)
+           + message.substring(0, 1);
+}
+function addTask() {
+     if (document.forms["task"].elements["newtask"].value == "")
+           window.alert("You must enter a value in the New Task field.");
+     else {
+           if (document.forms["task"].elements["tasks"].options.length === 1 && document.forms["task"].elements["tasks"].options[0].value === "tasks")
+                 document.forms["task"].elements["tasks"].remove(0);
+           var newTask = new Option(document.forms["task"].elements["newtask"].value.trim(), document.forms["task"].elements["newtask"].value.trim());
+		   document.forms["task"].elements["tasks"].add(newTask);
+		   document.forms["task"].elements["newtask"].value = "";
+     }
+}
+function deleteTask() {
+    var form = document.forms["task"];
+    var tasksSelect = form.elements["tasks"];
+    var selectedIndex = tasksSelect.selectedIndex;
+
+    if (selectedIndex === -1) {
+        window.alert("You must select a task to delete.");
+    } else {
+        tasksSelect.remove(selectedIndex);
+        
+        if (tasksSelect.length === 0) {
+            tasksSelect.add(new Option("Tasks", "tasks"));
+        }
+    }
+}
+function ascendingSort() {
+    var form = document.forms["task"];
+    var tasksSelect = form.elements["tasks"];
+    var tasksArray = Array.from(tasksSelect.options).map(option => option.value);
+
+    tasksArray.sort();
+    
+    tasksSelect.options.length = 0; 
+
+    tasksArray.forEach(task => {
+        tasksSelect.add(new Option(task, task));
+    });
+}
+function descendingSort() {
+    var form = document.forms["task"];
+    var tasksSelect = form.elements["tasks"];
+    var tasksArray = Array.from(tasksSelect.options).map(option => option.value);
+
+    tasksArray.sort().reverse(); 
+    
+    tasksSelect.options.length = 0; 
+
+    tasksArray.forEach(task => {
+        tasksSelect.add(new Option(task, task));
+    });
+}
+</script>
+</head>
+<body>
+<h1>To Do List</h1>
+ <form name="task">
+<p>New Task <input type="text" size="68" name="newtask" /></p>
+<p><input type="button" value="Add Task" onclick="addTask()" style="width: 150px" />
+<input type="button" value="Delete Selected Task" onclick="deleteTask()" style="width: 150px" /><br />
+<input type="button" value="Ascending Sort" onclick="ascendingSort()" style="width: 150px" />
+<input type="button" value="Descending Sort" onclick="descendingSort()" style="width: 150px" />
+</p>
+<p><select name="tasks" size="10" style="width: 500px">
+<option value="tasks">Tasks</option></select></p>
+</form>
+</body>
+</html>

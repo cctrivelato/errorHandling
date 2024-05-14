@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Tip Calculator</title>
+<meta http-equiv="content-type" content="text/html;charset=iso-8859-1" />
+<script type="text/javascript">
+/* for the HTML I added a name for the tag forms 'Calculator' and edited one of
+the tr - td items to have an onchange condition. In the code, I added the forms[]
+and elements[] to get the value from each td values and also to send the values
+calculated to other td items. I also fixed the calculation in the method. */
+
+function figureTip() {
+     var bill = parseInt(document.forms["Calculator"].elements["bill"].value);
+     var tipPercent = parseInt(document.forms["Calculator"].elements["tip_percent"].value);
+     var numPeople = parseInt(document.forms["Calculator"].elements["num_people"].value);
+	 
+     var tipAmount = Math.round(bill * (tipPercent/100));
+     var total = bill + tipAmount;
+     var totalPerPerson = Math.round(total / numPeople);
+	 
+     document.forms["Calculator"].elements["tip_amount"].value = tipAmount.toFixed(2);
+     document.forms["Calculator"].elements["total"].value = total.toFixed(2);
+     document.forms["Calculator"].elements["total_person"].value = totalPerPerson.toFixed(2);
+}
+
+</script>
+</head>
+<body>
+<h2>Tip Calculator</h2>
+<form action="" name="Calculator">
+<table border="0">
+<tr><td>Bill:</td><td><input type="text" name="bill" value="0"
+onchange="figureTip();" /></td></tr>
+<tr><td>Tip %:</td><td><input type="text" name="tip_percent" value="0"
+onchange="figureTip();" /> (enter as a whole number)</td></tr>
+<tr><td># of People:</td><td><input type="text" name="num_people"
+value="1" onchange="figureTip();" /> </td></tr>
+<tr><td>Tip amount:</td><td><input type="text" name="tip_amount" value="0" readonly="readonly" /></td></tr>
+<tr><td>Total:</td><td><input type="text" name="total" value="0" readonly="readonly" /></td></tr>
+<tr><td>Total per Person:</td><td><input type="text"
+name="total_person" value="0" readonly="readonly" /></td></tr>
+</table>
+</form>
+</body>
+</html>
